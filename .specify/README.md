@@ -1,16 +1,12 @@
-# ChatZPT
+# Spec Kit Integration for ChatZPT
 
-AI 캐릭터 기반 채팅 서비스 개발
+이 프로젝트는 GitHub Spec Kit을 사용하여 스펙 주도 개발을 진행합니다.
 
-## 🚀 Spec Kit 통합
-
-이 프로젝트는 [GitHub Spec Kit](https://github.com/github/spec-kit)을 사용하여 스펙 주도 개발(Spec-Driven Development)을 진행합니다.
-
-### 📋 사용 가능한 Slash Commands
+## 사용 가능한 Slash Commands
 
 Cursor에서 다음 명령어들을 사용할 수 있습니다:
 
-#### 핵심 명령어
+### 핵심 명령어
 
 - `/speckit.constitution` - 프로젝트의 지배 원칙과 개발 가이드라인 생성/업데이트
 - `/speckit.specify` - 구축하고자 하는 것 정의 (요구사항 및 사용자 스토리)
@@ -18,13 +14,13 @@ Cursor에서 다음 명령어들을 사용할 수 있습니다:
 - `/speckit.tasks` - 구현을 위한 실행 가능한 작업 목록 생성
 - `/speckit.implement` - 계획에 따라 기능을 구축하기 위해 모든 작업 실행
 
-#### 선택적 명령어
+### 선택적 명령어
 
 - `/speckit.clarify` - 명세가 부족한 영역 명확화 (speckit.plan 전에 권장)
 - `/speckit.analyze` - 아티팩트 간 일관성 및 커버리지 분석
 - `/speckit.checklist` - 요구사항 완성도, 명확성, 일관성을 검증하는 맞춤형 품질 체크리스트 생성
 
-### 🔄 개발 워크플로우
+## 워크플로우
 
 1. **Constitution 설정**: `/speckit.constitution`으로 프로젝트 원칙 설정
 2. **요구사항 정의**: `/speckit.specify`로 구축할 것 정의
@@ -34,53 +30,14 @@ Cursor에서 다음 명령어들을 사용할 수 있습니다:
 6. **분석**: `/speckit.analyze`로 일관성 검증 (선택사항)
 7. **구현**: `/speckit.implement`로 실제 구현 진행
 
-### 📁 Spec Kit 파일 구조
+## 파일 구조
 
 ```
 .specify/
 ├── memory/
 │   └── constitution.md          # 프로젝트 지배 원칙
 ├── specs/                       # 기능별 스펙 디렉토리
-│   └── 001-user-authentication/ # 사용자 인증 시스템 스펙
 ├── templates/                   # 템플릿 파일들
 ├── scripts/                     # PowerShell 스크립트들
 └── cursor-settings.json         # Cursor 연동 설정
 ```
-
-### 🎯 현재 구현된 스펙
-
-- **001-user-authentication**: 사용자 인증 시스템
-  - 📋 [스펙 문서](.specify/specs/001-user-authentication/spec.md)
-  - 🏗️ [기술 계획](.specify/specs/001-user-authentication/plan.md)
-  - 🗄️ [데이터 모델](.specify/specs/001-user-authentication/data-model.md)
-  - 🔌 [API 스펙](.specify/specs/001-user-authentication/api-spec.json)
-  - 🏛️ [아키텍처](.specify/specs/001-user-authentication/architecture.md)
-  - ⚙️ [개발 가이드](.specify/specs/001-user-authentication/development-guide.md)
-
-### 🛠️ 기술 스택
-
-#### 프론트엔드
-
-- **React 19** + **TypeScript** + **Vite**
-- **Jotai** (상태 관리) + **Tailwind CSS** (스타일링)
-- **Framer Motion** (애니메이션) + **Axios** (HTTP 클라이언트)
-
-#### 백엔드
-
-- **Node.js** + **Express** + **TypeScript**
-- **LowDB** (JSON 기반 데이터베이스) + **JWT** (인증)
-- **OpenAPI SDK** (API 문서화)
-
-#### AI 연동
-
-- **OpenAI API** (GPT-4o-mini 모델)
-
-#### 데이터 저장
-
-- **LocalStorage** + **JSON 기반 로컬 파일**
-
-#### 테스트
-
-- **Jest** (테스트 프레임워크)
-
-자세한 내용은 [.specify/README.md](.specify/README.md)를 참고하세요.
