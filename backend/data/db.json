@@ -1,0 +1,138 @@
+{
+  "users": [
+    {
+      "id": "0678290a-5263-4cf9-b6fd-89355ece2292",
+      "email": "admin@chatzpt.com",
+      "passwordHash": "$2a$12$6GSBUXcunxZEurkgxKKLXOnuYxzf1d6kNP6dLHh/CEj18uY4RebLy",
+      "createdAt": "2025-10-22T05:57:07.967Z",
+      "updatedAt": "2025-10-22T09:54:08.497Z",
+      "isActive": true,
+      "emailVerified": true,
+      "profile": {
+        "name": "관리자",
+        "avatar": "",
+        "bio": "ChatZPT 관리자 계정입니다.",
+        "preferences": {
+          "theme": "system",
+          "language": "ko",
+          "notifications": {
+            "email": true,
+            "push": true
+          }
+        }
+      },
+      "security": {
+        "failedLoginAttempts": 0,
+        "twoFactorEnabled": false
+      },
+      "lastLoginAt": "2025-10-22T09:54:08.497Z"
+    },
+    {
+      "id": "f74bb068-7438-4136-8ea2-8eae9f72ffed",
+      "email": "user@chatzpt.com",
+      "passwordHash": "$2a$12$MdQUcJxkTzTUdSy5r7z2T.0KLPzAdJk..GVXrBf3i.bwpL.qd.nTq",
+      "createdAt": "2025-10-22T05:57:08.267Z",
+      "updatedAt": "2025-10-22T05:57:08.267Z",
+      "isActive": true,
+      "emailVerified": true,
+      "profile": {
+        "name": "일반 사용자",
+        "avatar": "",
+        "bio": "ChatZPT 일반 사용자 계정입니다.",
+        "preferences": {
+          "theme": "light",
+          "language": "ko",
+          "notifications": {
+            "email": true,
+            "push": false
+          }
+        }
+      },
+      "security": {
+        "failedLoginAttempts": 0,
+        "twoFactorEnabled": false
+      }
+    },
+    {
+      "id": "8077d26b-371a-4f23-a5ae-2fb932cd2e20",
+      "email": "test@chatzpt.com",
+      "passwordHash": "$2a$12$82a5BczRzJD7mKN.db8x6eVh3RUWmbBxNeAkQmzyWflIRNvH3e9HG",
+      "createdAt": "2025-10-22T05:57:08.568Z",
+      "updatedAt": "2025-10-22T05:57:08.568Z",
+      "isActive": true,
+      "emailVerified": false,
+      "profile": {
+        "name": "테스트 사용자",
+        "avatar": "",
+        "bio": "이메일 인증이 필요한 테스트 계정입니다.",
+        "preferences": {
+          "theme": "dark",
+          "language": "en",
+          "notifications": {
+            "email": false,
+            "push": true
+          }
+        }
+      },
+      "security": {
+        "failedLoginAttempts": 0,
+        "twoFactorEnabled": false
+      }
+    },
+    {
+      "id": "f990c186-d612-4a19-9a7f-876643192af8",
+      "email": "test1@chatzpt.com",
+      "passwordHash": "$2a$12$/cCX9TI6QhDrtYFW.CEQH.UKz6PH0Ug57nhyVXE532mA2782ndTgu",
+      "createdAt": "2025-10-22T08:57:25.850Z",
+      "updatedAt": "2025-10-22T08:57:25.850Z",
+      "isActive": true,
+      "emailVerified": false,
+      "profile": {
+        "name": "",
+        "avatar": "",
+        "bio": "",
+        "preferences": {
+          "theme": "system",
+          "language": "ko",
+          "notifications": {
+            "email": true,
+            "push": true
+          }
+        }
+      },
+      "security": {
+        "failedLoginAttempts": 0,
+        "twoFactorEnabled": false
+      }
+    }
+  ],
+  "refreshTokens": [
+    {
+      "id": "4b751cf2-18e4-403c-8a5f-4fc0b9581e0f",
+      "userId": "0678290a-5263-4cf9-b6fd-89355ece2292",
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwNjc4MjkwYS01MjYzLTRjZjktYjZmZC04OTM1NWVjZTIyOTIiLCJlbWFpbCI6ImFkbWluQGNoYXR6cHQuY29tIiwiaWF0IjoxNzYxMTI2ODQ4LCJleHAiOjE3NjM3MTg4NDgsInR5cGUiOiJyZWZyZXNoIiwianRpIjoiNThmODMyMDMtODMwMy00YjFiLWJkMWYtYjcyMmY0OWViZjRmIn0.DHYfPmnAeJ_qbjy7oXBJyWDN6bwYxz4GAEQ_ldKmeQQ",
+      "expiresAt": "2025-11-21T09:54:08.000Z",
+      "createdAt": "2025-10-22T09:54:08.507Z",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36",
+      "ipAddress": "::1",
+      "isRevoked": true,
+      "revokedAt": "2025-10-22T10:09:27.285Z"
+    },
+    {
+      "id": "0554f02d-8e54-4fb4-988d-0b1c4a3cc55c",
+      "userId": "0678290a-5263-4cf9-b6fd-89355ece2292",
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwNjc4MjkwYS01MjYzLTRjZjktYjZmZC04OTM1NWVjZTIyOTIiLCJlbWFpbCI6ImFkbWluQGNoYXR6cHQuY29tIiwiaWF0IjoxNzYxMTI3NzY3LCJleHAiOjE3NjM3MTk3NjcsInR5cGUiOiJyZWZyZXNoIiwianRpIjoiMDYyOTI4MTQtNTU3Mi00YWM1LTliMDAtZWViNTQ2MDdlYzFlIn0.T09QNgKt_JSddLWAq1JsEnlLIn_cr1EHFSPCfNJBbGo",
+      "expiresAt": "2025-11-21T10:09:27.000Z",
+      "createdAt": "2025-10-22T10:09:27.290Z",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36",
+      "ipAddress": "::1",
+      "isRevoked": false
+    }
+  ],
+  "passwordResetTokens": [],
+  "emailVerificationTokens": [],
+  "metadata": {
+    "version": "1.0.0",
+    "lastMigration": "2025-10-22T05:57:08.568Z"
+  }
+}
