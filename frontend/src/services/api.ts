@@ -1,12 +1,18 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
-import { ApiResponse, ApiError } from '@shared/types/api';
+import { ApiResponse } from '@shared/types/api';
 
 class ApiClient {
   private client: AxiosInstance;
   private baseURL: string;
+  private isRefreshing: boolean = false;
+  private refreshPromise: Promise<string> | null = null;
+  private failedQueue: Array<{
+    resolve: (value: any) => void;
+    reject: (error: any) => void;
+  }> = [];
 
   constructor() {
-    this.baseURL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api';
+    this.baseURL = (import.meta as any).env?.VITE_API_URL || 'http://localhost:3001/api';
     
     this.client = axios.create({
       baseURL: this.baseURL,
@@ -49,24 +55,58 @@ class ApiClient {
 
         // Handle 401 errors (token expired)
         if (error.response?.status === 401 && !originalRequest._retry) {
+          // Skip refresh for auth endpoints to prevent infinite loops
+          if (originalRequest.url?.includes('/auth/')) {
+            return Promise.reject(error);
+          }
+
           originalRequest._retry = true;
+
+          // If already refreshing, queue the request
+          if (this.isRefreshing) {
+            return new Promise((resolve, reject) => {
+              this.failedQueue.push({ resolve, reject });
+            }).then((token) => {
+              originalRequest.headers.Authorization = `Bearer ${token}`;
+              return this.client(originalRequest);
+            }).catch((err) => {
+              return Promise.reject(err);
+            });
+          }
+
+          this.isRefreshing = true;
 
           try {
             const refreshToken = this.getStoredRefreshToken();
-            if (refreshToken) {
-              const response = await this.refreshAccessToken(refreshToken);
-              const { accessToken } = response.data.tokens;
-              
-              this.setStoredToken(accessToken);
-              originalRequest.headers.Authorization = `Bearer ${accessToken}`;
-              
-              return this.client(originalRequest);
+            if (!refreshToken) {
+              throw new Error('No refresh token available');
             }
+
+            // Check if refresh token is expired before making the request
+            if (this.isRefreshTokenExpired(refreshToken)) {
+              throw new Error('Refresh token expired');
+            }
+
+            this.refreshPromise = this.performTokenRefresh(refreshToken);
+            const newAccessToken = await this.refreshPromise;
+
+            // Process queued requests
+            this.processQueue(null, newAccessToken);
+
+            originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
+            return this.client(originalRequest);
+
           } catch (refreshError) {
-            // Refresh failed, redirect to login
+            // Process queued requests with error
+            this.processQueue(refreshError, null);
+            
+            // Clear auth storage and redirect to login
             this.clearAuthStorage();
             window.location.href = '/login';
             return Promise.reject(refreshError);
+          } finally {
+            this.isRefreshing = false;
+            this.refreshPromise = null;
           }
         }
 
@@ -91,14 +131,51 @@ class ApiClient {
     localStorage.setItem('access_token', token);
   }
 
-  private setStoredRefreshToken(token: string): void {
-    localStorage.setItem('refresh_token', token);
-  }
 
   private clearAuthStorage(): void {
     localStorage.removeItem('access_token');
     localStorage.removeItem('refresh_token');
     localStorage.removeItem('user_data');
+  }
+
+  private isRefreshTokenExpired(token: string): boolean {
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      const currentTime = Math.floor(Date.now() / 1000);
+      return payload.exp < currentTime;
+    } catch {
+      return true; // If we can't parse the token, consider it expired
+    }
+  }
+
+  private async performTokenRefresh(refreshToken: string): Promise<string> {
+    const response = await this.refreshAccessToken(refreshToken);
+    const { accessToken, refreshToken: newRefreshToken } = response.data?.tokens || {};
+    
+    if (!accessToken) {
+      throw new Error('No access token received from refresh');
+    }
+
+    this.setStoredToken(accessToken);
+    
+    // Store new refresh token if provided
+    if (newRefreshToken) {
+      localStorage.setItem('refresh_token', newRefreshToken);
+    }
+    
+    return accessToken;
+  }
+
+  private processQueue(error: any, token: string | null): void {
+    this.failedQueue.forEach(({ resolve, reject }) => {
+      if (error) {
+        reject(error);
+      } else {
+        resolve(token);
+      }
+    });
+    
+    this.failedQueue = [];
   }
 
   // Generic request method

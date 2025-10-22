@@ -5,7 +5,7 @@
       "email": "admin@chatzpt.com",
       "passwordHash": "$2a$12$6GSBUXcunxZEurkgxKKLXOnuYxzf1d6kNP6dLHh/CEj18uY4RebLy",
       "createdAt": "2025-10-22T05:57:07.967Z",
-      "updatedAt": "2025-10-22T09:54:08.497Z",
+      "updatedAt": "2025-10-22T21:01:08.393Z",
       "isActive": true,
       "emailVerified": true,
       "profile": {
@@ -25,7 +25,7 @@
         "failedLoginAttempts": 0,
         "twoFactorEnabled": false
       },
-      "lastLoginAt": "2025-10-22T09:54:08.497Z"
+      "lastLoginAt": "2025-10-22T21:01:08.393Z"
     },
     {
       "id": "f74bb068-7438-4136-8ea2-8eae9f72ffed",
@@ -84,7 +84,7 @@
       "email": "test1@chatzpt.com",
       "passwordHash": "$2a$12$/cCX9TI6QhDrtYFW.CEQH.UKz6PH0Ug57nhyVXE532mA2782ndTgu",
       "createdAt": "2025-10-22T08:57:25.850Z",
-      "updatedAt": "2025-10-22T08:57:25.850Z",
+      "updatedAt": "2025-10-22T12:14:12.795Z",
       "isActive": true,
       "emailVerified": false,
       "profile": {
@@ -103,27 +103,17 @@
       "security": {
         "failedLoginAttempts": 0,
         "twoFactorEnabled": false
-      }
+      },
+      "lastLoginAt": "2025-10-22T12:14:12.795Z"
     }
   ],
   "refreshTokens": [
     {
-      "id": "4b751cf2-18e4-403c-8a5f-4fc0b9581e0f",
+      "id": "c1f3c6cb-7361-40ce-a84b-f68bf8edcd64",
       "userId": "0678290a-5263-4cf9-b6fd-89355ece2292",
-      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwNjc4MjkwYS01MjYzLTRjZjktYjZmZC04OTM1NWVjZTIyOTIiLCJlbWFpbCI6ImFkbWluQGNoYXR6cHQuY29tIiwiaWF0IjoxNzYxMTI2ODQ4LCJleHAiOjE3NjM3MTg4NDgsInR5cGUiOiJyZWZyZXNoIiwianRpIjoiNThmODMyMDMtODMwMy00YjFiLWJkMWYtYjcyMmY0OWViZjRmIn0.DHYfPmnAeJ_qbjy7oXBJyWDN6bwYxz4GAEQ_ldKmeQQ",
-      "expiresAt": "2025-11-21T09:54:08.000Z",
-      "createdAt": "2025-10-22T09:54:08.507Z",
-      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36",
-      "ipAddress": "::1",
-      "isRevoked": true,
-      "revokedAt": "2025-10-22T10:09:27.285Z"
-    },
-    {
-      "id": "0554f02d-8e54-4fb4-988d-0b1c4a3cc55c",
-      "userId": "0678290a-5263-4cf9-b6fd-89355ece2292",
-      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwNjc4MjkwYS01MjYzLTRjZjktYjZmZC04OTM1NWVjZTIyOTIiLCJlbWFpbCI6ImFkbWluQGNoYXR6cHQuY29tIiwiaWF0IjoxNzYxMTI3NzY3LCJleHAiOjE3NjM3MTk3NjcsInR5cGUiOiJyZWZyZXNoIiwianRpIjoiMDYyOTI4MTQtNTU3Mi00YWM1LTliMDAtZWViNTQ2MDdlYzFlIn0.T09QNgKt_JSddLWAq1JsEnlLIn_cr1EHFSPCfNJBbGo",
-      "expiresAt": "2025-11-21T10:09:27.000Z",
-      "createdAt": "2025-10-22T10:09:27.290Z",
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwNjc4MjkwYS01MjYzLTRjZjktYjZmZC04OTM1NWVjZTIyOTIiLCJlbWFpbCI6ImFkbWluQGNoYXR6cHQuY29tIiwiaWF0IjoxNzYxMTY2ODY4LCJleHAiOjE3NjM3NTg4NjgsInR5cGUiOiJyZWZyZXNoIiwianRpIjoiYjIyMzY4OGYtODA2Yy00MjdkLThkMmItMjVhNDFmNDI0Yzk4In0.JLtK4Vf8wJIFZUCruKIZ2u9BOfCaH8T7Qy1-oe8zhQQ",
+      "expiresAt": "2025-11-21T21:01:08.000Z",
+      "createdAt": "2025-10-22T21:01:08.404Z",
       "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36",
       "ipAddress": "::1",
       "isRevoked": false

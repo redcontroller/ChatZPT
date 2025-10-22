@@ -23,14 +23,12 @@ export interface User {
 // User state interface
 export interface UserState {
   user: User | null;
-  isLoading: boolean;
   error: string | null;
 }
 
 // Initial user state
 const initialUserState: UserState = {
   user: null,
-  isLoading: false,
   error: null,
 };
 
@@ -40,7 +38,6 @@ export const userAtom = atom<UserState>(initialUserState);
 // Derived atoms
 export const currentUserAtom = atom((get) => get(userAtom).user);
 
-export const userLoadingAtom = atom((get) => get(userAtom).isLoading);
 
 export const userErrorAtom = atom((get) => get(userAtom).error);
 
@@ -57,16 +54,6 @@ export const setUserAtom = atom(
   }
 );
 
-export const setUserLoadingAtom = atom(
-  null,
-  (get, set, isLoading: boolean) => {
-    const currentUserState = get(userAtom);
-    set(userAtom, {
-      ...currentUserState,
-      isLoading,
-    });
-  }
-);
 
 export const setUserErrorAtom = atom(
   null,

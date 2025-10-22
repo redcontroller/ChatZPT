@@ -101,14 +101,20 @@ export const createRateLimit = (windowMs: number, max: number, message?: string)
 // General rate limiting
 export const generalRateLimit = createRateLimit(
   config.RATE_LIMIT_WINDOW_MS,
-  config.RATE_LIMIT_MAX_REQUESTS,
+  (() => { // 개발환경: 1000회, 프로덕션: 100회
+    const isDevelopment = process.env.NODE_ENV === 'development';
+    return isDevelopment ? config.RATE_LIMIT_MAX_REQUESTS * 10 : config.RATE_LIMIT_MAX_REQUESTS;
+  })(),
   'Too many requests from this IP, please try again later.'
 );
 
 // Strict rate limiting for authentication endpoints
 export const authRateLimit = createRateLimit(
   15 * 60 * 1000, // 15 minutes
-  5, // 5 attempts
+  (() => { // 개발환경: 100회, 프로덕션: 20회
+    const isDevelopment = process.env.NODE_ENV === 'development';
+    return isDevelopment ? 100 : 20;
+  })(),
   'Too many authentication attempts, please try again later.'
 );
 

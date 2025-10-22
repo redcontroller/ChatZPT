@@ -1,5 +1,3 @@
-import { atom } from 'jotai';
-
 // Re-export all atoms for easy importing
 export * from './authAtom';
 export * from './userAtom';
