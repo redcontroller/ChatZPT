@@ -78,6 +78,16 @@ ChatZPT는 OpenAI API를 활용한 AI 캐릭터 기반 채팅 서비스입니다
 - **이메일**: `admin@chatzpt.com`
 - **비밀번호**: `Admin123!`
 
+## 📷 실행 화면
+
+|로그인|대시보드|캐릭터 선택|
+|-----------|-----------|-----------|
+|<img height="600" alt="image" src="https://github.com/user-attachments/assets/b07468b8-d84c-4037-8224-c316341bbeae" /> |<img height="600" alt="image" src="https://github.com/user-attachments/assets/f2a82c95-6715-45e4-bf1b-98d400d45033" /> |<img height="600" alt="image" src="https://github.com/user-attachments/assets/1128e71b-cfd6-4b28-8a22-de965185b57c" /> |
+
+|대화|프로필|설정|
+|-----------|-----------|-----------|
+|<img height="600" alt="image" src="https://github.com/user-attachments/assets/f886c998-1b95-4dd6-9118-8e407667a05a" /> |<img height="600" alt="image" src="https://github.com/user-attachments/assets/a268a098-94f1-44e2-9dd6-eb8ad6aad7bd" /> |<img height="600" alt="image" src="https://github.com/user-attachments/assets/61365543-de23-4177-b8b6-2fbfdb286852" /> |
+
 ## 📁 프로젝트 구조
 
 ```
