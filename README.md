@@ -243,6 +243,6 @@ OPENAI_MODEL=gpt-4o-mini
 
 **ChatZPT** - AI와 함께하는 새로운 대화의 시작 🚀
 
-Made with ❤️ by [Your Name]
+Made with ❤️ by [@redcontroller](https://github.com/redcontroller)
 
 </div>
