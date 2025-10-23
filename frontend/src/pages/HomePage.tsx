@@ -3,46 +3,16 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useAtom } from 'jotai';
 import { isAuthenticatedAtom } from '../store/authAtom';
-import Button from '../components/Button';
-import Card from '../components/Card';
+import { Button } from '../components/Button';
+import { Card } from '../components/Card';
+import Header from '../components/Header';
 
 const HomePage: React.FC = () => {
   const [isAuthenticated] = useAtom(isAuthenticatedAtom);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary-50 to-secondary-100 dark:from-secondary-900 dark:to-secondary-800">
-      {/* Navigation */}
-      <nav className="bg-white/80 dark:bg-secondary-900/80 backdrop-blur-sm border-b border-secondary-200 dark:border-secondary-700">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-primary-600 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-lg">C</span>
-              </div>
-              <span className="text-xl font-bold text-secondary-900 dark:text-secondary-100">
-                ChatZPT
-              </span>
-            </div>
-            
-            <div className="flex items-center space-x-4">
-              {isAuthenticated ? (
-                <Link to="/dashboard">
-                  <Button>대시보드</Button>
-                </Link>
-              ) : (
-                <>
-                  <Link to="/login">
-                    <Button buttonVariant="outline" buttonSize="md">로그인</Button>
-                  </Link>
-                  <Link to="/register">
-                    <Button buttonVariant="primary" buttonSize="md">회원가입</Button>
-                  </Link>
-                </>
-              )}
-            </div>
-          </div>
-        </div>
-      </nav>
+      <Header />
 
       {/* Hero Section */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
@@ -75,19 +45,15 @@ const HomePage: React.FC = () => {
           >
             {isAuthenticated ? (
               <Link to="/dashboard">
-                <Button buttonSize="lg">대시보드로 이동</Button>
+                <Button buttonVariant="primary" buttonSize="lg">대시보드로 이동</Button>
               </Link>
             ) : (
-              <>
-                <Link to="/register">
-                  <Button buttonSize="lg"
+              <Link to="/dashboard">
+                <Button 
                   buttonVariant="primary"
-                  >지금 시작하기</Button>
-                </Link>
-                <Link to="/login">
-                  <Button buttonVariant="outline" buttonSize="lg">로그인</Button>
-                </Link>
-              </>
+                  buttonSize="lg"
+                >지금 시작하기</Button>
+              </Link>
             )}
           </motion.div>
         </div>
@@ -166,7 +132,7 @@ const HomePage: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="text-center">
             <p className="text-secondary-500 dark:text-secondary-400">
-              © 2024 ChatZPT. All rights reserved.
+              © 2025 ChatZPT. All rights reserved.
             </p>
           </div>
         </div>

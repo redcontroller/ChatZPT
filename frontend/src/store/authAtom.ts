@@ -8,13 +8,43 @@ export interface AuthState {
   expiresAt: number | null;
 }
 
-// Initial authentication state
-const initialAuthState: AuthState = {
-  isAuthenticated: false,
-  accessToken: null,
-  refreshToken: null,
-  expiresAt: null,
+// Load initial state from sessionStorage
+const loadInitialAuthState = (): AuthState => {
+  try {
+    const accessToken = sessionStorage.getItem('access_token');
+    const refreshToken = sessionStorage.getItem('refresh_token');
+    const userData = sessionStorage.getItem('user_data');
+    
+    if (accessToken && refreshToken && userData) {
+      // Parse token to get expiration time
+      try {
+        const payload = JSON.parse(atob(accessToken.split('.')[1]));
+        const expiresAt = payload.exp * 1000; // Convert to milliseconds
+        
+        return {
+          isAuthenticated: true,
+          accessToken,
+          refreshToken,
+          expiresAt,
+        };
+      } catch (error) {
+        console.error('Error parsing token:', error);
+      }
+    }
+  } catch (error) {
+    console.error('Error loading auth state from sessionStorage:', error);
+  }
+  
+  return {
+    isAuthenticated: false,
+    accessToken: null,
+    refreshToken: null,
+    expiresAt: null,
+  };
 };
+
+// Initial authentication state
+const initialAuthState: AuthState = loadInitialAuthState();
 
 // Authentication atom
 export const authAtom = atom<AuthState>(initialAuthState);
@@ -43,14 +73,38 @@ export const setAuthAtom = atom(
   null,
   (get, set, authData: Partial<AuthState>) => {
     const currentAuth = get(authAtom);
-    set(authAtom, { ...currentAuth, ...authData });
+    const newAuth = { ...currentAuth, ...authData };
+    set(authAtom, newAuth);
+    
+    // Sync with sessionStorage
+    if (newAuth.accessToken) {
+      sessionStorage.setItem('access_token', newAuth.accessToken);
+    }
+    if (newAuth.refreshToken) {
+      sessionStorage.setItem('refresh_token', newAuth.refreshToken);
+    }
+    if (newAuth.expiresAt) {
+      // Store expiration time if needed
+      sessionStorage.setItem('token_expires_at', newAuth.expiresAt.toString());
+    }
   }
 );
 
 export const clearAuthAtom = atom(
   null,
   (get, set) => {
-    set(authAtom, initialAuthState);
+    set(authAtom, {
+      isAuthenticated: false,
+      accessToken: null,
+      refreshToken: null,
+      expiresAt: null,
+    });
+    
+    // Clear sessionStorage
+    sessionStorage.removeItem('access_token');
+    sessionStorage.removeItem('refresh_token');
+    sessionStorage.removeItem('user_data');
+    sessionStorage.removeItem('token_expires_at');
   }
 );
 
@@ -64,5 +118,10 @@ export const setTokensAtom = atom(
       refreshToken: tokens.refreshToken,
       expiresAt,
     });
+    
+    // Sync with sessionStorage
+    sessionStorage.setItem('access_token', tokens.accessToken);
+    sessionStorage.setItem('refresh_token', tokens.refreshToken);
+    sessionStorage.setItem('token_expires_at', expiresAt.toString());
   }
 );

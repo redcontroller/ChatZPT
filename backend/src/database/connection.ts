@@ -9,6 +9,9 @@ export interface DatabaseSchema {
   refreshTokens: RefreshToken[];
   passwordResetTokens: PasswordResetToken[];
   emailVerificationTokens: EmailVerificationToken[];
+  characters: any[];
+  conversations: any[];
+  messages: any[];
   metadata: {
     version: string;
     lastMigration: string;
@@ -103,6 +106,9 @@ class Database {
         refreshTokens: [],
         passwordResetTokens: [],
         emailVerificationTokens: [],
+        characters: [],
+        conversations: [],
+        messages: [],
         metadata: {
           version: '1.0.0',
           lastMigration: new Date().toISOString(),

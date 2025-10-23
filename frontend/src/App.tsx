@@ -13,11 +13,13 @@ import VerifyEmailPage from './pages/VerifyEmailPage';
 import DashboardPage from './pages/DashboardPage';
 import ProfilePage from './pages/ProfilePage';
 import SettingsPage from './pages/SettingsPage';
+import CharacterSelectionPage from './pages/CharacterSelectionPage';
+import ChatPage from './pages/ChatPage';
 
 // Components
 import ProtectedRoute from './components/ProtectedRoute';
 import PublicRoute from './components/PublicRoute';
-import Layout from './components/Layout';
+import { Layout } from './components/Layout';
 
 function App() {
   const [, initializeTheme] = useAtom(initializeThemeAtom);
@@ -103,6 +105,24 @@ function App() {
               <Layout>
                 <SettingsPage />
               </Layout>
+            </ProtectedRoute>
+          }
+        />
+        
+        {/* AI Character Chat routes */}
+        <Route
+          path="/characters"
+          element={
+            <ProtectedRoute>
+              <CharacterSelectionPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/chat/:characterId"
+          element={
+            <ProtectedRoute>
+              <ChatPage />
             </ProtectedRoute>
           }
         />

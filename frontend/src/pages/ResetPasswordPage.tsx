@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Link, useSearchParams, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useAuth } from '../hooks/useAuth';
-import Button from '../components/Button';
-import Input from '../components/Input';
-import Card from '../components/Card';
+import { Button } from '../components/Button';
+import { Input } from '../components/Input';
+import { Card } from '../components/Card';
 
 const ResetPasswordPage: React.FC = () => {
   const [searchParams] = useSearchParams();
@@ -121,7 +121,7 @@ const ResetPasswordPage: React.FC = () => {
           <Card>
             <div className="text-center">
               <Link to="/login">
-                <Button className="w-full">
+                <Button buttonVariant="primary" buttonSize="sm" className="w-full">
                   로그인하기
                 </Button>
               </Link>
@@ -206,6 +206,8 @@ const ResetPasswordPage: React.FC = () => {
             />
 
             <Button
+              buttonVariant="primary"
+              buttonSize="sm"
               type="submit"
               className="w-full"
               isLoading={isLoading}

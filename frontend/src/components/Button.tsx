@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { clsx, type ClassValue } from 'clsx';
-import LoadingSpinner from './LoadingSpinner';
+import { LoadingSpinner } from './LoadingSpinner';
 
 // Utility function to merge class names
 const cn = (...inputs: ClassValue[]) => clsx(inputs);
@@ -16,7 +16,7 @@ interface ButtonProps extends Omit<MotionButtonProps, 'children'> {
   isLoading?: boolean;
 }
 
-const Button: React.FC<ButtonProps> = ({
+export const Button: React.FC<ButtonProps> = ({
   isLoading = false,
   buttonVariant,
   buttonSize,
@@ -76,5 +76,3 @@ const Button: React.FC<ButtonProps> = ({
     </motion.button>
   );
 };
-
-export default Button;

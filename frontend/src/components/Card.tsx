@@ -7,13 +7,15 @@ interface CardProps {
   className?: string;
   hover?: boolean;
   padding?: 'sm' | 'md' | 'lg';
+  onClick?: () => void;
 }
 
-const Card: React.FC<CardProps> = ({ 
+export const Card: React.FC<CardProps> = ({ 
   children, 
   className, 
   hover = false,
-  padding = 'md' 
+  padding = 'md',
+  onClick
 }) => {
   const paddingClasses = {
     sm: 'p-4',
@@ -32,10 +34,9 @@ const Card: React.FC<CardProps> = ({
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
+      onClick={onClick}
     >
       {children}
     </motion.div>
   );
 };
-
-export default Card;

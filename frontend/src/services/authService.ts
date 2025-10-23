@@ -3,14 +3,7 @@ import {
   LoginRequest, 
   RegisterRequest, 
   AuthResponse, 
-  RefreshTokenRequest,
-  RefreshTokenResponse,
-  LogoutRequest,
-  ForgotPasswordRequest,
-  ResetPasswordRequest,
-  VerifyEmailRequest,
-  ResendVerificationRequest,
-  GetUserResponse
+  RefreshTokenResponse
 } from '@shared/types/auth';
 import { User } from '@shared/types/user';
 
@@ -20,10 +13,10 @@ class AuthService {
     const response = await apiClient.post<AuthResponse['data']>('/auth/login', credentials);
     
     if (response.success && response.data) {
-      // Store tokens
-      localStorage.setItem('access_token', response.data.tokens.accessToken);
-      localStorage.setItem('refresh_token', response.data.tokens.refreshToken);
-      localStorage.setItem('user_data', JSON.stringify(response.data.user));
+      // Store tokens in sessionStorage
+      sessionStorage.setItem('access_token', response.data.tokens.accessToken);
+      sessionStorage.setItem('refresh_token', response.data.tokens.refreshToken);
+      sessionStorage.setItem('user_data', JSON.stringify(response.data.user));
     }
     
     return response;
@@ -34,10 +27,10 @@ class AuthService {
     const response = await apiClient.post<AuthResponse['data']>('/auth/register', userData);
     
     if (response.success && response.data) {
-      // Store tokens
-      localStorage.setItem('access_token', response.data.tokens.accessToken);
-      localStorage.setItem('refresh_token', response.data.tokens.refreshToken);
-      localStorage.setItem('user_data', JSON.stringify(response.data.user));
+      // Store tokens in sessionStorage
+      sessionStorage.setItem('access_token', response.data.tokens.accessToken);
+      sessionStorage.setItem('refresh_token', response.data.tokens.refreshToken);
+      sessionStorage.setItem('user_data', JSON.stringify(response.data.user));
     }
     
     return response;
@@ -48,9 +41,9 @@ class AuthService {
     const response = await apiClient.post<RefreshTokenResponse['data']>('/auth/refresh', { refreshToken });
     
     if (response.success && response.data) {
-      // Update stored tokens
-      localStorage.setItem('access_token', response.data.accessToken);
-      localStorage.setItem('refresh_token', response.data.refreshToken);
+      // Update stored tokens in sessionStorage
+      sessionStorage.setItem('access_token', response.data.accessToken);
+      sessionStorage.setItem('refresh_token', response.data.refreshToken);
     }
     
     return response;
@@ -58,7 +51,7 @@ class AuthService {
 
   // Logout user
   async logout(): Promise<void> {
-    const refreshToken = localStorage.getItem('refresh_token');
+    const refreshToken = sessionStorage.getItem('refresh_token');
     
     try {
       if (refreshToken) {
@@ -68,7 +61,7 @@ class AuthService {
       // Ignore logout errors
       console.error('Logout error:', error);
     } finally {
-      // Clear local storage regardless of API call success
+      // Clear session storage regardless of API call success
       this.clearAuthStorage();
     }
   }
@@ -95,11 +88,11 @@ class AuthService {
 
   // Get current user
   async getCurrentUser(): Promise<User> {
-    const response = await apiClient.get<GetUserResponse['data']>('/auth/me');
+    const response = await apiClient.get<any>('/auth/me');
     
-    if (response.success && response.data) {
-      // Update stored user data
-      localStorage.setItem('user_data', JSON.stringify(response.data.user));
+    if (response.success && response.data && response.data.user) {
+      // Update stored user data in sessionStorage
+      sessionStorage.setItem('user_data', JSON.stringify(response.data.user));
       return response.data.user;
     }
     
@@ -108,14 +101,14 @@ class AuthService {
 
   // Check if user is authenticated
   isAuthenticated(): boolean {
-    const token = localStorage.getItem('access_token');
-    const userData = localStorage.getItem('user_data');
+    const token = sessionStorage.getItem('access_token');
+    const userData = sessionStorage.getItem('user_data');
     return !!(token && userData);
   }
 
   // Get stored user data
   getStoredUser(): User | null {
-    const userData = localStorage.getItem('user_data');
+    const userData = sessionStorage.getItem('user_data');
     if (userData) {
       try {
         return JSON.parse(userData);
@@ -129,19 +122,19 @@ class AuthService {
 
   // Get stored access token
   getStoredToken(): string | null {
-    return localStorage.getItem('access_token');
+    return sessionStorage.getItem('access_token');
   }
 
   // Get stored refresh token
   getStoredRefreshToken(): string | null {
-    return localStorage.getItem('refresh_token');
+    return sessionStorage.getItem('refresh_token');
   }
 
   // Clear authentication storage
   clearAuthStorage(): void {
-    localStorage.removeItem('access_token');
-    localStorage.removeItem('refresh_token');
-    localStorage.removeItem('user_data');
+    sessionStorage.removeItem('access_token');
+    sessionStorage.removeItem('refresh_token');
+    sessionStorage.removeItem('user_data');
   }
 
   // Check if token is expired

@@ -1,0 +1,1359 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "ChatZPT AI Character Chat API",
+    "description": "AI 캐릭터와의 실시간 채팅을 위한 REST API",
+    "version": "1.0.0",
+    "contact": {
+      "name": "ChatZPT Team",
+      "email": "sendithere79@naver.com"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3001/api",
+      "description": "Development server"
+    },
+    {
+      "url": "https://api.chatzpt.com/api",
+      "description": "Production server"
+    }
+  ],
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ],
+  "paths": {
+    "/characters": {
+      "get": {
+        "summary": "캐릭터 목록 조회",
+        "description": "사용 가능한 AI 캐릭터 목록을 조회합니다.",
+        "tags": [
+          "Characters"
+        ],
+        "parameters": [
+          {
+            "name": "search",
+            "in": "query",
+            "description": "캐릭터 이름 검색",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "페이지당 결과 수",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 20,
+              "maximum": 100
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "description": "페이지 오프셋",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 0
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "캐릭터 목록 조회 성공",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "characters": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Character"
+                      }
+                    },
+                    "pagination": {
+                      "$ref": "#/components/schemas/Pagination"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      },
+      "post": {
+        "summary": "새 캐릭터 생성",
+        "description": "새로운 AI 캐릭터를 생성합니다.",
+        "tags": [
+          "Characters"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateCharacterRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "캐릭터 생성 성공",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "character": {
+                      "$ref": "#/components/schemas/Character"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/characters/{characterId}": {
+      "get": {
+        "summary": "캐릭터 상세 조회",
+        "description": "특정 캐릭터의 상세 정보를 조회합니다.",
+        "tags": [
+          "Characters"
+        ],
+        "parameters": [
+          {
+            "name": "characterId",
+            "in": "path",
+            "required": true,
+            "description": "캐릭터 ID",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "캐릭터 상세 조회 성공",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "character": {
+                      "$ref": "#/components/schemas/Character"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      },
+      "put": {
+        "summary": "캐릭터 정보 수정",
+        "description": "기존 캐릭터의 정보를 수정합니다.",
+        "tags": [
+          "Characters"
+        ],
+        "parameters": [
+          {
+            "name": "characterId",
+            "in": "path",
+            "required": true,
+            "description": "캐릭터 ID",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateCharacterRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "캐릭터 수정 성공",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "character": {
+                      "$ref": "#/components/schemas/Character"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      },
+      "delete": {
+        "summary": "캐릭터 삭제",
+        "description": "캐릭터를 삭제합니다.",
+        "tags": [
+          "Characters"
+        ],
+        "parameters": [
+          {
+            "name": "characterId",
+            "in": "path",
+            "required": true,
+            "description": "캐릭터 ID",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "캐릭터 삭제 성공",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "캐릭터가 성공적으로 삭제되었습니다"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/chat/send-message": {
+      "post": {
+        "summary": "메시지 전송",
+        "description": "AI 캐릭터에게 메시지를 전송하고 응답을 받습니다.",
+        "tags": [
+          "Chat"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SendMessageRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "메시지 전송 성공",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MessageResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "429": {
+            "description": "요청 한도 초과",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/chat/conversations": {
+      "get": {
+        "summary": "대화 목록 조회",
+        "description": "사용자의 대화 목록을 조회합니다.",
+        "tags": [
+          "Chat"
+        ],
+        "parameters": [
+          {
+            "name": "characterId",
+            "in": "query",
+            "description": "특정 캐릭터의 대화만 조회",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "페이지당 결과 수",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 20,
+              "maximum": 100
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "description": "페이지 오프셋",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 0
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "대화 목록 조회 성공",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "conversations": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/ConversationSummary"
+                      }
+                    },
+                    "pagination": {
+                      "$ref": "#/components/schemas/Pagination"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      },
+      "post": {
+        "summary": "새 대화 시작",
+        "description": "새로운 대화를 시작합니다.",
+        "tags": [
+          "Chat"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateConversationRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "대화 생성 성공",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "conversation": {
+                      "$ref": "#/components/schemas/Conversation"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/chat/conversations/{conversationId}": {
+      "get": {
+        "summary": "대화 상세 조회",
+        "description": "특정 대화의 상세 정보를 조회합니다.",
+        "tags": [
+          "Chat"
+        ],
+        "parameters": [
+          {
+            "name": "conversationId",
+            "in": "path",
+            "required": true,
+            "description": "대화 ID",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "대화 상세 조회 성공",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "conversation": {
+                      "$ref": "#/components/schemas/Conversation"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      },
+      "delete": {
+        "summary": "대화 삭제",
+        "description": "대화를 삭제합니다.",
+        "tags": [
+          "Chat"
+        ],
+        "parameters": [
+          {
+            "name": "conversationId",
+            "in": "path",
+            "required": true,
+            "description": "대화 ID",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "대화 삭제 성공",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "대화가 성공적으로 삭제되었습니다"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/chat/conversations/{conversationId}/messages": {
+      "get": {
+        "summary": "대화 메시지 조회",
+        "description": "특정 대화의 메시지 목록을 조회합니다.",
+        "tags": [
+          "Chat"
+        ],
+        "parameters": [
+          {
+            "name": "conversationId",
+            "in": "path",
+            "required": true,
+            "description": "대화 ID",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "페이지당 결과 수",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 50,
+              "maximum": 100
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "description": "페이지 오프셋",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 0
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "메시지 목록 조회 성공",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "messages": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Message"
+                      }
+                    },
+                    "pagination": {
+                      "$ref": "#/components/schemas/Pagination"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/user/preferences": {
+      "get": {
+        "summary": "사용자 설정 조회",
+        "description": "사용자의 캐릭터별 설정을 조회합니다.",
+        "tags": [
+          "User"
+        ],
+        "responses": {
+          "200": {
+            "description": "사용자 설정 조회 성공",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "preferences": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/UserPreference"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/user/preferences/{characterId}": {
+      "put": {
+        "summary": "사용자 설정 수정",
+        "description": "특정 캐릭터에 대한 사용자 설정을 수정합니다.",
+        "tags": [
+          "User"
+        ],
+        "parameters": [
+          {
+            "name": "characterId",
+            "in": "path",
+            "required": true,
+            "description": "캐릭터 ID",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateUserPreferenceRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "사용자 설정 수정 성공",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "preference": {
+                      "$ref": "#/components/schemas/UserPreference"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "schemas": {
+      "Character": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "example": "char_123e4567-e89b-12d3-a456-426614174000"
+          },
+          "name": {
+            "type": "string",
+            "example": "아리"
+          },
+          "description": {
+            "type": "string",
+            "example": "친근하고 활발한 AI 어시스턴트"
+          },
+          "personality": {
+            "type": "string",
+            "example": "친근하고 긍정적이며 도움이 되는 성격"
+          },
+          "avatar": {
+            "type": "string",
+            "format": "uri",
+            "example": "https://example.com/avatar.jpg"
+          },
+          "systemPrompt": {
+            "type": "string",
+            "example": "당신은 아리라는 이름의 친근한 AI 어시스턴트입니다..."
+          },
+          "isActive": {
+            "type": "boolean",
+            "example": true
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2024-01-01T00:00:00Z"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2024-01-01T00:00:00Z"
+          },
+          "createdBy": {
+            "type": "string",
+            "format": "uuid",
+            "example": "user_123e4567-e89b-12d3-a456-426614174000"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "description",
+          "personality",
+          "systemPrompt",
+          "isActive",
+          "createdAt",
+          "updatedAt",
+          "createdBy"
+        ]
+      },
+      "CreateCharacterRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "아리"
+          },
+          "description": {
+            "type": "string",
+            "example": "친근하고 활발한 AI 어시스턴트"
+          },
+          "personality": {
+            "type": "string",
+            "example": "친근하고 긍정적이며 도움이 되는 성격"
+          },
+          "avatar": {
+            "type": "string",
+            "format": "uri",
+            "example": "https://example.com/avatar.jpg"
+          },
+          "systemPrompt": {
+            "type": "string",
+            "example": "당신은 아리라는 이름의 친근한 AI 어시스턴트입니다..."
+          }
+        },
+        "required": [
+          "name",
+          "description",
+          "personality",
+          "systemPrompt"
+        ]
+      },
+      "UpdateCharacterRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "아리"
+          },
+          "description": {
+            "type": "string",
+            "example": "친근하고 활발한 AI 어시스턴트"
+          },
+          "personality": {
+            "type": "string",
+            "example": "친근하고 긍정적이며 도움이 되는 성격"
+          },
+          "avatar": {
+            "type": "string",
+            "format": "uri",
+            "example": "https://example.com/avatar.jpg"
+          },
+          "systemPrompt": {
+            "type": "string",
+            "example": "당신은 아리라는 이름의 친근한 AI 어시스턴트입니다..."
+          },
+          "isActive": {
+            "type": "boolean",
+            "example": true
+          }
+        }
+      },
+      "Conversation": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "example": "conv_123e4567-e89b-12d3-a456-426614174000"
+          },
+          "userId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "user_123e4567-e89b-12d3-a456-426614174000"
+          },
+          "characterId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "char_123e4567-e89b-12d3-a456-426614174000"
+          },
+          "title": {
+            "type": "string",
+            "example": "아리와의 대화"
+          },
+          "isActive": {
+            "type": "boolean",
+            "example": true
+          },
+          "messageCount": {
+            "type": "integer",
+            "example": 15
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2024-01-01T00:00:00Z"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2024-01-01T00:00:00Z"
+          },
+          "lastMessageAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2024-01-01T12:00:00Z"
+          }
+        },
+        "required": [
+          "id",
+          "userId",
+          "characterId",
+          "title",
+          "isActive",
+          "messageCount",
+          "createdAt",
+          "updatedAt"
+        ]
+      },
+      "ConversationSummary": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "example": "conv_123e4567-e89b-12d3-a456-426614174000"
+          },
+          "characterId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "char_123e4567-e89b-12d3-a456-426614174000"
+          },
+          "characterName": {
+            "type": "string",
+            "example": "아리"
+          },
+          "title": {
+            "type": "string",
+            "example": "아리와의 대화"
+          },
+          "lastMessage": {
+            "type": "string",
+            "example": "안녕하세요! 반가워요 😊"
+          },
+          "lastMessageAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2024-01-01T12:00:00Z"
+          },
+          "messageCount": {
+            "type": "integer",
+            "example": 15
+          }
+        },
+        "required": [
+          "id",
+          "characterId",
+          "characterName",
+          "title",
+          "lastMessage",
+          "lastMessageAt",
+          "messageCount"
+        ]
+      },
+      "CreateConversationRequest": {
+        "type": "object",
+        "properties": {
+          "characterId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "char_123e4567-e89b-12d3-a456-426614174000"
+          },
+          "title": {
+            "type": "string",
+            "example": "아리와의 대화"
+          }
+        },
+        "required": [
+          "characterId"
+        ]
+      },
+      "Message": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "example": "msg_123e4567-e89b-12d3-a456-426614174000"
+          },
+          "conversationId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "conv_123e4567-e89b-12d3-a456-426614174000"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "user",
+              "character"
+            ],
+            "example": "user"
+          },
+          "content": {
+            "type": "string",
+            "example": "안녕하세요!"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2024-01-01T12:00:00Z"
+          },
+          "characterId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "char_123e4567-e89b-12d3-a456-426614174000"
+          },
+          "metadata": {
+            "$ref": "#/components/schemas/MessageMetadata"
+          }
+        },
+        "required": [
+          "id",
+          "conversationId",
+          "type",
+          "content",
+          "timestamp"
+        ]
+      },
+      "MessageMetadata": {
+        "type": "object",
+        "properties": {
+          "tokens": {
+            "type": "integer",
+            "example": 150
+          },
+          "processingTime": {
+            "type": "integer",
+            "example": 2500
+          },
+          "model": {
+            "type": "string",
+            "example": "gpt-4o-mini-search-preview"
+          },
+          "temperature": {
+            "type": "number",
+            "example": 0.7
+          },
+          "topP": {
+            "type": "number",
+            "example": 0.9
+          }
+        }
+      },
+      "SendMessageRequest": {
+        "type": "object",
+        "properties": {
+          "characterId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "char_123e4567-e89b-12d3-a456-426614174000"
+          },
+          "message": {
+            "type": "string",
+            "example": "안녕하세요!"
+          },
+          "conversationId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "conv_123e4567-e89b-12d3-a456-426614174000"
+          }
+        },
+        "required": [
+          "characterId",
+          "message"
+        ]
+      },
+      "MessageResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "example": true
+          },
+          "messageId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "msg_123e4567-e89b-12d3-a456-426614174000"
+          },
+          "characterResponse": {
+            "type": "object",
+            "properties": {
+              "message": {
+                "type": "string",
+                "example": "안녕하세요! 반가워요 😊"
+              },
+              "timestamp": {
+                "type": "string",
+                "format": "date-time",
+                "example": "2024-01-01T12:00:00Z"
+              },
+              "characterId": {
+                "type": "string",
+                "format": "uuid",
+                "example": "char_123e4567-e89b-12d3-a456-426614174000"
+              }
+            },
+            "required": [
+              "message",
+              "timestamp",
+              "characterId"
+            ]
+          },
+          "conversationId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "conv_123e4567-e89b-12d3-a456-426614174000"
+          }
+        },
+        "required": [
+          "success",
+          "messageId",
+          "characterResponse",
+          "conversationId"
+        ]
+      },
+      "UserPreference": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "example": "pref_123e4567-e89b-12d3-a456-426614174000"
+          },
+          "userId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "user_123e4567-e89b-12d3-a456-426614174000"
+          },
+          "characterId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "char_123e4567-e89b-12d3-a456-426614174000"
+          },
+          "customPrompt": {
+            "type": "string",
+            "example": "항상 친근하게 대화해주세요"
+          },
+          "conversationStyle": {
+            "type": "string",
+            "enum": [
+              "casual",
+              "formal",
+              "friendly"
+            ],
+            "example": "friendly"
+          },
+          "language": {
+            "type": "string",
+            "enum": [
+              "ko",
+              "en"
+            ],
+            "example": "ko"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2024-01-01T00:00:00Z"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2024-01-01T00:00:00Z"
+          }
+        },
+        "required": [
+          "id",
+          "userId",
+          "characterId",
+          "conversationStyle",
+          "language",
+          "createdAt",
+          "updatedAt"
+        ]
+      },
+      "UpdateUserPreferenceRequest": {
+        "type": "object",
+        "properties": {
+          "customPrompt": {
+            "type": "string",
+            "example": "항상 친근하게 대화해주세요"
+          },
+          "conversationStyle": {
+            "type": "string",
+            "enum": [
+              "casual",
+              "formal",
+              "friendly"
+            ],
+            "example": "friendly"
+          },
+          "language": {
+            "type": "string",
+            "enum": [
+              "ko",
+              "en"
+            ],
+            "example": "ko"
+          }
+        }
+      },
+      "Pagination": {
+        "type": "object",
+        "properties": {
+          "total": {
+            "type": "integer",
+            "example": 100
+          },
+          "limit": {
+            "type": "integer",
+            "example": 20
+          },
+          "offset": {
+            "type": "integer",
+            "example": 0
+          },
+          "hasMore": {
+            "type": "boolean",
+            "example": true
+          }
+        },
+        "required": [
+          "total",
+          "limit",
+          "offset",
+          "hasMore"
+        ]
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "example": false
+          },
+          "error": {
+            "type": "string",
+            "example": "INVALID_REQUEST"
+          },
+          "message": {
+            "type": "string",
+            "example": "요청이 올바르지 않습니다"
+          },
+          "details": {
+            "type": "object",
+            "example": {
+              "field": "email",
+              "reason": "INVALID_FORMAT"
+            }
+          }
+        },
+        "required": [
+          "success",
+          "error",
+          "message"
+        ]
+      }
+    },
+    "responses": {
+      "BadRequest": {
+        "description": "잘못된 요청",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorResponse"
+            }
+          }
+        }
+      },
+      "Unauthorized": {
+        "description": "인증 실패",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorResponse"
+            }
+          }
+        }
+      },
+      "NotFound": {
+        "description": "리소스를 찾을 수 없음",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorResponse"
+            }
+          }
+        }
+      },
+      "InternalServerError": {
+        "description": "서버 내부 오류",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorResponse"
+            }
+          }
+        }
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "Characters",
+      "description": "AI 캐릭터 관리"
+    },
+    {
+      "name": "Chat",
+      "description": "채팅 및 대화 관리"
+    },
+    {
+      "name": "User",
+      "description": "사용자 설정 관리"
+    }
+  ]
+}

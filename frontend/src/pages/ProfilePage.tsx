@@ -2,13 +2,13 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { useAtom } from 'jotai';
 import { currentUserAtom } from '../store/userAtom';
-import Card from '../components/Card';
+import { Card } from '../components/Card';
 
 const ProfilePage: React.FC = () => {
   const [user] = useAtom(currentUserAtom);
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 pt-8">
       {/* Profile Header */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}

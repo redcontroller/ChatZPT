@@ -1,6 +1,8 @@
 import { Router } from 'express';
 import authRoutes from './authRoutes';
 import userRoutes from './userRoutes';
+import characterRoutes from './characterRoutes';
+import chatRoutes from './chatRoutes';
 
 const router = Router();
 
@@ -25,6 +27,8 @@ router.get('/health', (req, res) => {
 // API routes
 router.use('/auth', authRoutes);
 router.use('/user', userRoutes);
+router.use('/characters', characterRoutes);
+router.use('/chat', chatRoutes);
 
 // API documentation endpoint
 router.get('/docs', (req, res) => {

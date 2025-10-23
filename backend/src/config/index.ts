@@ -20,6 +20,14 @@ interface Config {
   
   // OpenAI
   OPENAI_API_KEY?: string;
+  OPENAI_MODEL?: string;
+  OPENAI_MAX_TOKENS?: number;
+  OPENAI_TEMPERATURE?: number;
+  OPENAI_TOP_P?: number;
+  OPENAI_FREQUENCY_PENALTY?: number;
+  OPENAI_PRESENCE_PENALTY?: number;
+  OPENAI_MAX_CONTEXT_MESSAGES?: number;
+  OPENAI_MAX_MESSAGE_LENGTH?: number;
   
   // Email Service
   EMAIL_SERVICE_API_KEY?: string;
@@ -54,6 +62,14 @@ const config: Config = {
   
   // OpenAI
   OPENAI_API_KEY: process.env.OPENAI_API_KEY,
+  OPENAI_MODEL: process.env.OPENAI_MODEL || (process.env.NODE_ENV === 'production' ? 'gpt-4o-mini-search-preview' : 'gpt-3.5-turbo-16k'),
+  OPENAI_MAX_TOKENS: parseInt(process.env.OPENAI_MAX_TOKENS || '1500', 10),
+  OPENAI_TEMPERATURE: parseFloat(process.env.OPENAI_TEMPERATURE || '0.7'),
+  OPENAI_TOP_P: parseFloat(process.env.OPENAI_TOP_P || '0.9'),
+  OPENAI_FREQUENCY_PENALTY: parseFloat(process.env.OPENAI_FREQUENCY_PENALTY || '0.1'),
+  OPENAI_PRESENCE_PENALTY: parseFloat(process.env.OPENAI_PRESENCE_PENALTY || '0.1'),
+  OPENAI_MAX_CONTEXT_MESSAGES: parseInt(process.env.OPENAI_MAX_CONTEXT_MESSAGES || '8', 10),
+  OPENAI_MAX_MESSAGE_LENGTH: parseInt(process.env.OPENAI_MAX_MESSAGE_LENGTH || '500', 10),
   
   // Email Service
   EMAIL_SERVICE_API_KEY: process.env.EMAIL_SERVICE_API_KEY,

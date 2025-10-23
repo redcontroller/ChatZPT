@@ -120,22 +120,21 @@ class ApiClient {
   }
 
   private getStoredToken(): string | null {
-    return localStorage.getItem('access_token');
+    return sessionStorage.getItem('access_token');
   }
 
   private getStoredRefreshToken(): string | null {
-    return localStorage.getItem('refresh_token');
+    return sessionStorage.getItem('refresh_token');
   }
 
   private setStoredToken(token: string): void {
-    localStorage.setItem('access_token', token);
+    sessionStorage.setItem('access_token', token);
   }
 
-
   private clearAuthStorage(): void {
-    localStorage.removeItem('access_token');
-    localStorage.removeItem('refresh_token');
-    localStorage.removeItem('user_data');
+    sessionStorage.removeItem('access_token');
+    sessionStorage.removeItem('refresh_token');
+    sessionStorage.removeItem('user_data');
   }
 
   private isRefreshTokenExpired(token: string): boolean {
@@ -160,7 +159,7 @@ class ApiClient {
     
     // Store new refresh token if provided
     if (newRefreshToken) {
-      localStorage.setItem('refresh_token', newRefreshToken);
+      sessionStorage.setItem('refresh_token', newRefreshToken);
     }
     
     return accessToken;

@@ -1,86 +1,238 @@
-# ChatZPT
+# ChatZPT - AI 캐릭터 기반 채팅 서비스
 
-AI 캐릭터 기반 채팅 서비스 개발
+<div align="center">
 
-## 🚀 Spec Kit 통합
+![ChatZPT Logo](https://img.shields.io/badge/ChatZPT-AI%20Character%20Chat-blue?style=for-the-badge&logo=openai)
 
-이 프로젝트는 [GitHub Spec Kit](https://github.com/github/spec-kit)을 사용하여 스펙 주도 개발(Spec-Driven Development)을 진행합니다.
+**AI 캐릭터와 실시간 대화를 즐기는 혁신적인 채팅 서비스**
 
-### 📋 사용 가능한 Slash Commands
+[![React](https://img.shields.io/badge/React-19-61DAFB?style=flat&logo=react&logoColor=white)](https://reactjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-3178C6?style=flat&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Node.js](https://img.shields.io/badge/Node.js-20-339933?style=flat&logo=node.js&logoColor=white)](https://nodejs.org/)
+[![OpenAI](https://img.shields.io/badge/OpenAI-GPT--4o--mini-412991?style=flat&logo=openai&logoColor=white)](https://openai.com/)
 
-Cursor에서 다음 명령어들을 사용할 수 있습니다:
+</div>
 
-#### 핵심 명령어
+## 📖 프로젝트 소개
 
-- `/speckit.constitution` - 프로젝트의 지배 원칙과 개발 가이드라인 생성/업데이트
-- `/speckit.specify` - 구축하고자 하는 것 정의 (요구사항 및 사용자 스토리)
-- `/speckit.plan` - 선택한 기술 스택으로 기술적 구현 계획 생성
-- `/speckit.tasks` - 구현을 위한 실행 가능한 작업 목록 생성
-- `/speckit.implement` - 계획에 따라 기능을 구축하기 위해 모든 작업 실행
+ChatZPT는 OpenAI API를 활용한 AI 캐릭터 기반 채팅 서비스입니다. 사용자는 다양한 성격의 AI 캐릭터와 실시간으로 대화하며, 자신만의 맞춤형 캐릭터를 생성하고 관리할 수 있습니다.
 
-#### 선택적 명령어
+### ✨ 주요 기능
 
-- `/speckit.clarify` - 명세가 부족한 영역 명확화 (speckit.plan 전에 권장)
-- `/speckit.analyze` - 아티팩트 간 일관성 및 커버리지 분석
-- `/speckit.checklist` - 요구사항 완성도, 명확성, 일관성을 검증하는 맞춤형 품질 체크리스트 생성
+- **🤖 AI 캐릭터 채팅**: 기본 3개 캐릭터 (Vicky, Genie, Spike) + 사용자 정의 캐릭터
+- **💬 실시간 대화**: OpenAI API 연동으로 자연스러운 대화 경험
+- **👤 사용자 인증**: JWT 기반 안전한 로그인/로그아웃 시스템
+- **🎨 캐릭터 생성**: 이름, 시스템 프롬프트, 아바타 이미지로 맞춤형 캐릭터 제작
+- **📱 반응형 UI**: 모바일/데스크톱 모든 디바이스에서 최적화된 경험
+- **🌙 다크모드**: 라이트/다크 테마 지원
+- **🎭 애니메이션**: Framer Motion 기반 부드러운 사용자 경험
+- **💾 대화 기록**: 모든 대화 내용 자동 저장 및 관리
 
-### 🔄 개발 워크플로우
+## 🚀 빠른 시작
 
-1. **Constitution 설정**: `/speckit.constitution`으로 프로젝트 원칙 설정
-2. **요구사항 정의**: `/speckit.specify`로 구축할 것 정의
-3. **명세 명확화**: `/speckit.clarify`로 부족한 부분 보완 (선택사항)
-4. **기술 계획**: `/speckit.plan`으로 기술 스택과 아키텍처 계획
-5. **작업 분해**: `/speckit.tasks`로 실행 가능한 작업 목록 생성
-6. **분석**: `/speckit.analyze`로 일관성 검증 (선택사항)
-7. **구현**: `/speckit.implement`로 실제 구현 진행
+### 사전 요구사항
 
-### 📁 Spec Kit 파일 구조
+- **Node.js** 18.0.0 이상
+- **npm** 9.0.0 이상
+- **OpenAI API Key** (서비스 사용을 위해 필요)
+
+### 설치 및 실행
+
+1. **저장소 클론**
+   ```bash
+   git clone https://github.com/your-username/ChatZPT.git
+   cd ChatZPT
+   ```
+
+2. **의존성 설치**
+   ```bash
+   npm install
+   ```
+
+3. **환경 변수 설정**
+   ```bash
+   # backend/.env 파일 생성
+   cp backend/env.example backend/.env
+   
+   # OpenAI API Key 설정
+   OPENAI_API_KEY=your_openai_api_key_here
+   ```
+
+4. **개발 서버 실행**
+   ```bash
+   # 백엔드 서버 실행 (포트: 3001)
+   npm run dev:backend
+   
+   # 프론트엔드 서버 실행 (포트: 5173)
+   npm run dev:frontend
+   ```
+
+5. **브라우저에서 접속**
+   - 프론트엔드: http://localhost:5173
+   - 백엔드 API: http://localhost:3001
+
+### 🧪 테스트 계정
+
+개발 및 테스트를 위한 기본 계정이 제공됩니다:
+
+- **이메일**: `admin@chatzpt.com`
+- **비밀번호**: `Admin123!`
+
+## 📁 프로젝트 구조
 
 ```
-.specify/
-├── memory/
-│   └── constitution.md          # 프로젝트 지배 원칙
-├── specs/                       # 기능별 스펙 디렉토리
-│   └── 001-user-authentication/ # 사용자 인증 시스템 스펙
-├── templates/                   # 템플릿 파일들
-├── scripts/                     # PowerShell 스크립트들
-└── cursor-settings.json         # Cursor 연동 설정
+ChatZPT/
+├── frontend/                 # React 프론트엔드
+│   ├── src/
+│   │   ├── components/       # 재사용 가능한 컴포넌트
+│   │   ├── pages/           # 페이지 컴포넌트
+│   │   ├── services/        # API 서비스
+│   │   ├── store/          # Jotai 상태 관리
+│   │   ├── styles/         # 전역 스타일
+│   │   └── utils/          # 유틸리티 함수
+│   ├── public/             # 정적 파일
+│   └── package.json
+├── backend/                 # Node.js 백엔드
+│   ├── src/
+│   │   ├── controllers/     # API 컨트롤러
+│   │   ├── services/       # 비즈니스 로직
+│   │   ├── middleware/      # 미들웨어
+│   │   ├── routes/         # API 라우트
+│   │   └── database/       # 데이터베이스 연결
+│   ├── data/               # LowDB 데이터 파일
+│   └── package.json
+├── shared/                  # 공통 타입 정의
+│   └── types/
+└── package.json            # 루트 패키지 설정
 ```
 
-### 🎯 현재 구현된 스펙
+## 🤖 기본 AI 에이전트
 
-- **001-user-authentication**: 사용자 인증 시스템
-  - 📋 [스펙 문서](.specify/specs/001-user-authentication/spec.md)
-  - 🏗️ [기술 계획](.specify/specs/001-user-authentication/plan.md)
-  - 🗄️ [데이터 모델](.specify/specs/001-user-authentication/data-model.md)
-  - 🔌 [API 스펙](.specify/specs/001-user-authentication/api-spec.json)
-  - 🏛️ [아키텍처](.specify/specs/001-user-authentication/architecture.md)
-  - ⚙️ [개발 가이드](.specify/specs/001-user-authentication/development-guide.md)
+### 🌟 Vicky (비키)
+**원영적 사고의 K-POP 아이돌 마인드**
 
-### 🛠️ 기술 스택
+- **성격**: 하이퍼 포지티브, 위트 넘치는, 자기중심적 해석
+- **특징**: 모든 상황을 긍정적으로 해석하며, K-POP 아이돌의 밝은 에너지
+- **대화 스타일**: 밝고 활기찬 톤, 이모지 활용, 자기애적 표현
 
-#### 프론트엔드
+📖 [자세한 설명서 보기](README-VICKY.md)
 
-- **React 19** + **TypeScript** + **Vite**
-- **Jotai** (상태 관리) + **Tailwind CSS** (스타일링)
-- **Framer Motion** (애니메이션) + **Axios** (HTTP 클라이언트)
+### 🧠 Genie (지니)
+**천재적 통찰력의 AI 어시스턴트**
 
-#### 백엔드
+- **성격**: 분석적, 창의적, 깊이 있는 사고
+- **특징**: 10가지 천재 통찰 공식을 활용한 심층 분석
+- **대화 스타일**: 논리적이고 체계적인 접근, 1500자 이상의 상세한 분석
 
-- **Node.js** + **Express** + **TypeScript**
-- **LowDB** (JSON 기반 데이터베이스) + **JWT** (인증)
-- **OpenAPI SDK** (API 문서화)
+📖 [자세한 설명서 보기](README-GENIE.md)
 
-#### AI 연동
+### 💪 Spike (스파이크)
+**충성스러운 동생 AI 어시스턴트**
 
-- **OpenAI API** (GPT-4o-mini 모델)
+- **성격**: 충성심 강한, 열정적인, 형님을 존경하는
+- **특징**: 사용자를 "형님"으로 부르며 절대적 충성심 표현
+- **대화 스타일**: 격한 감정 표현, 다수의 느낌표, 거친 말투이지만 항상 존경
 
-#### 데이터 저장
+📖 [자세한 설명서 보기](README-SPIKE.md)
 
-- **LocalStorage** + **JSON 기반 로컬 파일**
+## 🛠️ 기술 스택
 
-#### 테스트
+### Frontend
+- **React 19** - 최신 React 기능 활용
+- **TypeScript** - 타입 안전성 보장
+- **Vite** - 빠른 개발 서버 및 빌드
+- **Tailwind CSS** - 유틸리티 퍼스트 CSS 프레임워크
+- **Jotai** - 경량 상태 관리 라이브러리
+- **Framer Motion** - 부드러운 애니메이션
+- **Axios** - HTTP 클라이언트
 
-- **Jest** (테스트 프레임워크)
+### Backend
+- **Node.js** - JavaScript 런타임
+- **Express** - 웹 프레임워크
+- **TypeScript** - 타입 안전성
+- **LowDB** - JSON 기반 경량 데이터베이스
+- **JWT** - 토큰 기반 인증
+- **OpenAI API** - AI 대화 생성
 
-자세한 내용은 [.specify/README.md](.specify/README.md)를 참고하세요.
+### AI & 폰트
+- **OpenAI GPT-4o-mini** - 메인 AI 모델
+- **OpenAI GPT-3.5-turbo** - 개발 환경용
+- **Pretendard** - 한글 최적화 웹폰트
+
+## 🎨 주요 기능 상세
+
+### 사용자 인증 시스템
+- JWT 기반 토큰 인증
+- 세션 관리 및 자동 로그아웃
+- 비밀번호 암호화 (bcrypt)
+- 이메일 인증 시스템
+
+### AI 캐릭터 시스템
+- 기본 3개 캐릭터 제공
+- 사용자 정의 캐릭터 생성
+- 캐릭터별 독립적인 대화 세션
+- 시스템 프롬프트 관리
+
+### 실시간 채팅
+- OpenAI API 연동
+- 대화 컨텍스트 최적화
+- 토큰 사용량 관리
+- 에러 처리 및 재시도 로직
+
+### UI/UX
+- 반응형 디자인
+- 다크모드 지원
+- 부드러운 애니메이션
+- 접근성 고려
+
+## 📊 성능 최적화
+
+- **토큰 관리**: OpenAI API 호출 비용 최적화 (max_tokens: 1500)
+- **컨텍스트 관리**: 대화 기록 최적화로 토큰 사용량 감소
+- **폰트 최적화**: Pretendard 웹폰트 CDN 활용
+- **상태 관리**: Jotai를 통한 효율적인 상태 업데이트
+
+## 🚀 배포
+
+### 프로덕션 빌드
+```bash
+# 프론트엔드 빌드
+npm run build:frontend
+
+# 백엔드 빌드
+npm run build:backend
+```
+
+### 환경 변수 설정
+```bash
+# 프로덕션 환경 변수
+NODE_ENV=production
+OPENAI_API_KEY=your_production_api_key
+OPENAI_MODEL=gpt-4o-mini
+```
+
+## 🤝 기여하기
+
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## 📄 라이선스
+
+이 프로젝트는 MIT 라이선스 하에 배포됩니다. 자세한 내용은 `LICENSE` 파일을 참조하세요.
+
+## 📞 문의
+
+프로젝트에 대한 문의사항이 있으시면 이슈를 생성해 주세요.
+
+---
+
+<div align="center">
+
+**ChatZPT** - AI와 함께하는 새로운 대화의 시작 🚀
+
+Made with ❤️ by [Your Name]
+
+</div>

@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useAuth } from '../hooks/useAuth';
 import { useAtom } from 'jotai';
 import { authLoadingAtom } from '../store/loadingAtom';
-import Button from '../components/Button';
-import Input from '../components/Input';
-import Card from '../components/Card';
-import LoadingSpinner from '../components/LoadingSpinner';
+import { Button } from '../components/Button';
+import { Input } from '../components/Input';
+import { Card } from '../components/Card';
+import { LoadingSpinner } from '../components/LoadingSpinner';
 
 const LoginPage: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -16,6 +16,7 @@ const LoginPage: React.FC = () => {
     rememberMe: false,
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [useTestAccount, setUseTestAccount] = useState(false);
   
   const { login } = useAuth();
   const [isLoading] = useAtom(authLoadingAtom);
@@ -37,6 +38,25 @@ const LoginPage: React.FC = () => {
         ...prev,
         [name]: '',
       }));
+    }
+  };
+
+  const handleTestAccountToggle = () => {
+    const newUseTestAccount = !useTestAccount;
+    setUseTestAccount(newUseTestAccount);
+    
+    if (newUseTestAccount) {
+      setFormData({
+        email: 'admin@chatzpt.com',
+        password: 'Admin123!',
+        rememberMe: formData.rememberMe,
+      });
+    } else {
+      setFormData({
+        email: '',
+        password: '',
+        rememberMe: formData.rememberMe,
+      });
     }
   };
 
@@ -100,6 +120,57 @@ const LoginPage: React.FC = () => {
             ChatZPT에 오신 것을 환영합니다
           </p>
         </div>
+
+        {/* Test Account Toggle */}
+        <motion.div
+          className="flex items-center justify-center"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+        >
+          <div className="flex items-center space-x-3 bg-gray-50 dark:bg-gray-800 rounded-lg p-4">
+            <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+              테스트 계정 사용
+            </span>
+            <button
+              type="button"
+              onClick={handleTestAccountToggle}
+              className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 ${
+                useTestAccount ? 'bg-primary-600' : 'bg-gray-300 dark:bg-gray-600'
+              }`}
+            >
+              <span
+                className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                  useTestAccount ? 'translate-x-6' : 'translate-x-1'
+                }`}
+              />
+            </button>
+          </div>
+        </motion.div>
+
+        {/* Test Account Info */}
+        <AnimatePresence>
+          {useTestAccount && (
+            <motion.div
+              className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4"
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.3 }}
+            >
+              <div className="flex items-center space-x-2 mb-2">
+                <span className="text-blue-600 dark:text-blue-400">🧪</span>
+                <span className="text-sm font-medium text-blue-800 dark:text-blue-200">
+                  테스트 계정 정보
+                </span>
+              </div>
+              <div className="text-sm text-blue-700 dark:text-blue-300 space-y-1">
+                <div><strong>이메일:</strong> admin@chatzpt.com</div>
+                <div><strong>비밀번호:</strong> Admin123!</div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         {/* Login Form */}
         <Card>

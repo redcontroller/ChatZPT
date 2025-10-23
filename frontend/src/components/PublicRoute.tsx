@@ -2,7 +2,7 @@ import React from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 import { useAtom } from 'jotai';
 import { isAuthenticatedAtom } from '../store/authAtom';
-import LoadingSpinner from './LoadingSpinner';
+import { LoadingSpinner } from './LoadingSpinner';
 
 interface PublicRouteProps {
   children: React.ReactNode;

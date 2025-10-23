@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Link, useSearchParams, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useAuth } from '../hooks/useAuth';
-import Button from '../components/Button';
-import Card from '../components/Card';
+import { Button } from '../components/Button';
+import { Card } from '../components/Card';
 
 const VerifyEmailPage: React.FC = () => {
   const [searchParams] = useSearchParams();
@@ -102,12 +102,12 @@ const VerifyEmailPage: React.FC = () => {
           <Card>
             <div className="text-center space-y-4">
               <Link to="/dashboard">
-                <Button className="w-full">
+                <Button buttonVariant="primary" buttonSize="sm" className="w-full">
                   대시보드로 이동
                 </Button>
               </Link>
               <Link to="/login">
-                <Button buttonVariant="outline" buttonSize="md" className="w-full">
+                <Button buttonVariant="outline" buttonSize="sm" className="w-full">
                   로그인하기
                 </Button>
               </Link>
@@ -159,7 +159,7 @@ const VerifyEmailPage: React.FC = () => {
               다시 시도
             </Button>
             <Link to="/login">
-              <Button buttonVariant="ghost" className="w-full">
+              <Button buttonVariant="ghost" buttonSize="sm" className="w-full">
                 로그인으로 돌아가기
               </Button>
             </Link>

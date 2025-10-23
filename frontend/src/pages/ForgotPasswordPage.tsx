@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useAuth } from '../hooks/useAuth';
-import Button from '../components/Button';
-import Input from '../components/Input';
-import Card from '../components/Card';
+import { Button } from '../components/Button';
+import { Input } from '../components/Input';
+import { Card } from '../components/Card';
 
 const ForgotPasswordPage: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -65,6 +65,7 @@ const ForgotPasswordPage: React.FC = () => {
               </p>
               <Button
                 buttonVariant="outline"
+                buttonSize="sm"
                 onClick={() => {
                   setIsSubmitted(false);
                   setEmail('');
@@ -74,7 +75,7 @@ const ForgotPasswordPage: React.FC = () => {
                 다시 시도
               </Button>
               <Link to="/login">
-                <Button buttonVariant="ghost" className="w-full">
+                <Button buttonVariant="ghost" buttonSize="sm" className="w-full">
                   로그인으로 돌아가기
                 </Button>
               </Link>
@@ -140,6 +141,8 @@ const ForgotPasswordPage: React.FC = () => {
             />
 
             <Button
+              buttonVariant="primary"
+              buttonSize="sm"
               type="submit"
               className="w-full"
               isLoading={isLoading}

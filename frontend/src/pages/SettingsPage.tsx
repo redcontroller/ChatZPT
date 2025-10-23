@@ -1,11 +1,11 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import Card from '../components/Card';
-import Button from '../components/Button';
+import { Card } from '../components/Card';
+import { Button } from '../components/Button';
 
 const SettingsPage: React.FC = () => {
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 pt-8">
       {/* Settings Header */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
